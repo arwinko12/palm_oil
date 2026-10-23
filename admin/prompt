@@ -1,0 +1,201 @@
+# PROJECT: ePalmHaul — Web-Based Palm Harvest Hauling and Logistics Management System
+
+## 1. Your Role
+
+Act as a senior full-stack PHP developer, MySQL database architect, UI/UX designer, and software tester. Build a complete, functional, responsive web-based system named **ePalmHaul** for managing palm oil harvest hauling and logistics operations for Kenram Palm Oil Industry Incorporation (KPII).
+
+Do not build only a static dashboard or UI prototype. Implement the frontend, backend, MySQL database, business logic, authentication, role-based access control, CRUD operations, automated scheduling, notifications, computations, and reports.
+
+## 2. Required Technology Stack
+
+Use the following technologies:
+
+- Frontend: HTML5, CSS3, JavaScript
+- CSS framework: Bootstrap 5.3
+- Icons: Font Awesome or Bootstrap Icons
+- Backend: Core PHP using object-oriented programming where appropriate
+- Database: MySQL
+- Database connection: PDO or MySQLi with prepared statements; use one consistently
+- AJAX: jQuery AJAX for asynchronous operations
+- Notifications and confirmations: SweetAlert2
+- Tables: DataTables
+- Charts: Chart.js
+- Local development: XAMPP and phpMyAdmin
+- Development editor: Visual Studio Code
+
+Do not use React, Vue, Node.js, Laravel, or CodeIgniter. Keep the implementation straightforward, maintainable, and suitable for a PHP/MySQL academic project.
+
+## 3. System Users and Permissions
+
+Implement secure authentication and role-based access control for these four roles:
+
+### A. Administrator / Logistics Admin
+
+The administrator manages the entire hauling operation.
+
+Features:
+- Secure login and logout
+- Dashboard showing total farmers, drivers, trucks, hauling requests, scheduled trips, completed deliveries, and pending requests
+- Manage farmer accounts and profiles
+- Manage driver accounts and availability
+- Manage truck records, capacities, maintenance status, and trip history
+- View, approve, reject, edit, and schedule hauling requests
+- Assign available drivers and trucks
+- Automatically detect scheduling conflicts
+- View delivery progress and update authorized records
+- Configure FFB prices, incentives, quality bonuses, and haulage deduction rates
+- View notifications and system activity logs
+- Generate reports and export printable records
+- Manage system settings and authorized user accounts
+
+### B. Farmer
+
+Features:
+- Farmer registration, login, logout, and profile management
+- Store full name, contact number, farm location, estimated harvest volume, last harvest date, and relevant farm information
+- Submit hauling requests
+- Specify preferred hauling date and time, estimated FFB weight in tons, farm location, and requested truck type
+- View pending, approved, rejected, scheduled, and completed requests
+- View assigned driver, truck, hauling schedule, and delivery status
+- View the next harvest date based on the 20-day harvest cycle
+- Receive harvest reminders and scheduling updates
+- View scale tickets, gross weight, tare weight, net weight, deductions, incentives, and final net payable amount
+- View historical hauling and delivery transactions
+
+Farmers must only access their own records and transactions.
+
+### C. Driver
+
+Features:
+- Secure login and logout
+- View assigned hauling schedules
+- View farmer contact information, farm location, estimated load, hauling date, time, truck details, and delivery instructions
+- Receive assignment and schedule-change notifications
+- Update delivery status through authorized workflow stages
+- Record departure and arrival timestamps where applicable
+- View current and previous hauling assignments
+- View monthly trip totals and availability status
+
+Drivers must not access other drivers' private assignments or modify financial computations.
+
+### D. Weighbridge Operator
+
+Features:
+- Secure login and logout
+- View scheduled deliveries and expected truck arrivals
+- Record actual arrival date and time
+- Search deliveries by schedule number, farmer, ticket number, or plate number
+- Create and manage scale tickets
+- Record ticket number, farmer, truck plate number, truck type, farm location, harvest date, registration date and time, and fruit grade or class
+- Enter gross weight and tare weight
+- Automatically compute net weight
+- Compute gross payment, incentives, haulage deductions, and final net payable amount
+- Save, view, and print scale ticket records
+- Notify the farmer when scale ticket results are available
+
+Weighbridge operators must not manage administrator accounts or alter unrelated hauling schedules.
+
+## 4. Database Requirements
+
+Create a complete MySQL database named `epalmhaul_db`.
+
+Design a normalized relational database with primary keys, foreign keys, indexes, appropriate data types, timestamps, and referential integrity.
+
+Include tables for the following entities, adjusting the structure when necessary:
+
+1. `users` — authentication credentials, role, account status, and timestamps
+2. `farmers` — farmer profile and farm information
+3. `drivers` — driver profile and availability
+4. `trucks` — plate number, truck type, carrying capacity, status, maintenance records
+5. `hauling_requests` — farmer request details and approval status
+6. `hauling_schedules` — approved schedule, assigned driver, assigned truck, date, time, and status
+7. `harvest_cycles` — previous harvest date and next expected harvest date
+8. `deliveries` — departure, estimated arrival, actual arrival, completion, and delivery status
+9. `scale_tickets` — ticket number, delivery reference, gross weight, tare weight, net weight, grade, and weighing details
+10. `pricing_settings` — FFB price per kilogram, haulage rate, incentives, quality bonuses, and effective dates
+11. `payment_computations` — gross payment, incentives, deductions, and final net payable
+12. `notifications` — recipient, message, type, read status, and creation date
+13. `truck_maintenance` — maintenance date, description, and status
+14. `activity_logs` — authorized actions, user, timestamp, and affected record
+15. `system_settings` — configurable operational settings
+
+You may create additional tables for better normalization.
+
+Create a complete SQL file named `database.sql` containing database creation, table definitions, indexes, foreign keys, and safe initial configuration data.
+
+Do not store plaintext passwords. Use PHP `password_hash()` and `password_verify()`.
+
+Create a secure initial administrator setup process. Do not hardcode publicly known administrator credentials.
+
+## 5. Hauling Request Workflow
+
+Implement this workflow:
+
+1. Farmer logs in.
+2. Farmer submits a hauling request with preferred date, time, farm location, estimated tons, and requested truck type.
+3. The system validates the request and stores it as Pending.
+4. The administrator receives a notification.
+5. The administrator reviews and approves or rejects the request.
+6. When approved, the administrator schedules the hauling operation and assigns a compatible available driver and truck.
+7. The system checks driver availability, truck availability, truck capacity, and schedule conflicts.
+8. If a conflict exists, display a clear warning and prevent invalid assignments.
+9. Notify the farmer and driver of the confirmed schedule.
+10. The driver updates the delivery status during transport.
+11. The weighbridge operator records arrival and scale ticket information.
+12. The system calculates the final payment breakdown.
+13. The farmer receives a notification and can view the scale ticket and delivery history.
+
+Maintain a consistent relationship between each request, schedule, delivery, scale ticket, and payment computation.
+
+## 6. Automated Harvest Scheduling
+
+Implement a configurable 20-day harvest cycle.
+
+Requirements:
+- Calculate the next expected harvest date using the last confirmed harvest date plus 20 days.
+- Display the next harvest date on the farmer dashboard.
+- Allow authorized users to correct harvest dates when operational records justify the change.
+- Generate reminders for upcoming harvest dates.
+- Generate proposed hauling schedules based on farmer requests and available resources.
+- Consider requested date, time, truck type, estimated tons, truck carrying capacity, driver availability, and truck availability.
+- Detect overlapping assignments and capacity violations.
+- Prevent duplicate assignments and invalid schedules.
+- Display schedule conflict warnings.
+- Never silently overwrite an existing schedule.
+
+Do not treat the 20-day cycle as proof that harvesting has occurred. Actual harvest dates must be confirmed or recorded before recalculating the next cycle.
+
+## 7. Delivery Status Management
+
+Implement validated delivery status transitions:
+
+- Scheduled
+- In Transit
+- Arrived
+- Delivered
+- Completed
+- Cancelled
+
+Enforce the permitted workflow in the backend, not only in the interface.
+
+Record the user, timestamp, and status change. Prevent unauthorized users from changing delivery statuses.
+
+For example:
+- Drivers can update authorized transport statuses.
+- The weighbridge operator confirms physical arrival and records weighing information.
+- Completion requires the required delivery and scale ticket information.
+- Cancelled deliveries must retain
+
+
+admin
+Credentials:
+Email: admin@epalmhaul.local
+Password: Admin@2026x
+
+driver
+Email: ftest_driver_1792763519380@epalmhaul.local
+Password: Driver@2026x
+
+weithbridge
+Email: ftest_wb_1792763519380@epalmhaul.local
+Password: Wb@2026x
