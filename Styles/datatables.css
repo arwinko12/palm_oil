@@ -1,0 +1,129 @@
+/* ============================================================
+   ePalmHaul — DataTables theme polish
+   Layers on top of the Bootstrap-integration build (bs5 / bs4) so
+   every listing table across the four portals shares one look.
+   Covers the DataTables 2.x (.dt-*) and 1.x (.dataTables_*) markup.
+   ============================================================ */
+
+:root {
+    --dt-primary: #0e6b45;
+    --dt-line: #e6e9ef;
+    --dt-muted: #6b7684;
+    --dt-ink: #1e2a32;
+}
+
+.dataTables_wrapper,
+.dt-layout {
+    font-size: 13.5px;
+    color: var(--dt-ink);
+}
+
+/* Top / bottom control rows */
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_length,
+.dt-layout-cell.dt-search,
+.dt-layout-cell.dt-length {
+    padding: .35rem 0;
+}
+
+/* Search input styling (both markup generations) */
+.dataTables_wrapper .dataTables_filter input,
+.dt-search input,
+.dataTables_filter input {
+    margin-left: .5rem;
+    padding: .35rem .7rem;
+    border: 1px solid var(--dt-line);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--dt-ink);
+    min-width: 220px;
+    font-size: 13px;
+    outline: none;
+}
+.dataTables_wrapper .dataTables_filter input:focus,
+.dt-search input:focus {
+    border-color: var(--dt-primary);
+    box-shadow: 0 0 0 3px rgba(14, 107, 69, .12);
+}
+
+.dt-search label,
+.dataTables_filter label,
+.dataTables_length label {
+    color: var(--dt-muted);
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+}
+
+/* Info line */
+.dataTables_wrapper .dataTables_info,
+.dt-info {
+    color: var(--dt-muted);
+    padding-top: .6rem;
+    font-size: 12.5px;
+}
+
+/* Pagination */
+.dataTables_wrapper .dataTables_paginate .paginate_button,
+.dt-paging .page-link {
+    border-radius: 8px !important;
+    border: 1px solid var(--dt-line);
+    margin: 0 2px;
+    min-width: 34px;
+    text-align: center;
+    color: var(--dt-ink) !important;
+    background: #fff;
+    padding: .3rem .6rem;
+    font-weight: 500;
+    transition: background .15s ease, border-color .15s ease;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover,
+.dt-paging .page-link:hover {
+    background: #eef3f0 !important;
+    border-color: var(--dt-primary) !important;
+    color: var(--dt-primary) !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover,
+.dt-paging .page-item.active .page-link {
+    background: var(--dt-primary) !important;
+    border-color: var(--dt-primary) !important;
+    color: #fff !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+.dt-paging .page-item.disabled .page-link {
+    opacity: .45;
+    pointer-events: none;
+}
+
+/* Sortable header polish */
+table.dataTable thead th,
+table.dataTable thead td {
+    border-bottom: 1px solid var(--dt-line) !important;
+    padding: .7rem .75rem;
+    font-weight: 600;
+    color: var(--dt-ink);
+}
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc {
+    color: var(--dt-primary);
+}
+table.dataTable tbody td {
+    padding: .6rem .75rem;
+    vertical-align: middle;
+}
+table.dataTable.no-footer {
+    border-bottom: 1px solid var(--dt-line) !important;
+}
+
+/* Row hover to match the portals' tables */
+table.dataTable tbody tr:hover {
+    background-color: #f6faf7 !important;
+}
+
+/* Keep wide admin tables scrollable rather than overflowing the panel */
+.dataTables_scrollBody table.dataTable {
+    border-top: none !important;
+}

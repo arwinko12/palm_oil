@@ -22,12 +22,12 @@ $driverLabel  = Auth::name();
 <section class="welcome-banner">
     <div class="row align-items-center">
         <div class="col-md-8">
-            <h2>Hello, <?= e($driverLabel) ?>! 👋</h2>
-            <p>Your assigned hauling trips, farmer contacts and delivery status — all in one place.</p>
+            <h2>Hello, <?= e($driverLabel) ?></h2>
+            <p>Your assigned hauling trips, farmer contacts and delivery status &mdash; all in one place.</p>
             <div class="mt-3">
-                <span class="badge rounded-pill bg-light text-success px-3 py-2">
-                    <i class="bi bi-circle-fill me-1" style="font-size:7px"></i>
-                    <?= count($active) ?> active trip(s)
+                <span class="chip">
+                    <span class="cdot"></span>
+                    <?= count($active) ?> active trip<?= count($active) === 1 ? '' : 's' ?>
                 </span>
             </div>
         </div>

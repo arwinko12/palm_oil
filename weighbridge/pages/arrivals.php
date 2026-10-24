@@ -22,7 +22,7 @@ $board    = $delivery->arrivalsBoard();
 <div id="searchResults" class="mb-3" style="display:none;">
     <div class="panel">
         <div class="panel-header"><h5 class="panel-title"><i class="bi bi-list-check"></i> Search Results</h5></div>
-        <div class="table-responsive"><table class="table custom-table" id="searchTable"></table></div>
+        <div class="table-responsive"><table class="table custom-table no-dt" id="searchTable"></table></div>
     </div>
 </div>
 

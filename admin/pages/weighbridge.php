@@ -11,7 +11,7 @@ $tickets = (new ScaleTicket())->listTickets(300, $_GET['search'] ?? null);
 
 <div class="panel">
     <div class="table-responsive">
-        <table class="table" id="ticketsTable">
+        <table class="table" id="ticketsTable" data-search="#ticketSearch">
             <thead><tr><th>Ticket</th><th>Farmer</th><th>Plate</th><th>Harvest</th><th>Grade</th><th>Gross</th><th>Tare</th><th>Net</th><th>Gross Pay</th><th>Net Payable</th><th>Delivery</th><th></th></tr></thead>
             <tbody>
             <?php if (!$tickets): ?><tr><td colspan="12" class="text-muted">No tickets recorded yet.</td></tr><?php endif; ?>
@@ -37,8 +37,6 @@ $tickets = (new ScaleTicket())->listTickets(300, $_GET['search'] ?? null);
 </div>
 
 <script>
-$('#ticketSearch').on('keyup', function () {
-    const v = $(this).val().toLowerCase();
-    $('#ticketsTable tbody tr').each(function () { $(this).toggle($(this).text().toLowerCase().indexOf(v) > -1); });
-});
+// The header filter box is wired to the DataTables instance by
+// js/portal-datatables.js via the table's data-search attribute.
 </script>

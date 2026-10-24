@@ -23,13 +23,13 @@ $opName = Auth::name();
 <section class="welcome-banner">
     <div class="row align-items-center">
         <div class="col-md-8">
-            <h2>Welcome, <?= e($opName) ?> 👋</h2>
+            <h2>Welcome, <?= e($opName) ?></h2>
             <p>Record truck arrivals, weigh loads and issue scale tickets.</p>
         </div>
         <div class="col-md-4 text-md-end">
-            <span class="badge rounded-pill bg-light text-success px-3 py-2">
-                <i class="bi bi-circle-fill me-1" style="font-size:7px"></i>
-                <?= count($awaiting) ?> delivery(s) awaiting weighing
+            <span class="chip">
+                <span class="cdot"></span>
+                <?= count($awaiting) ?> delivery<?= count($awaiting) === 1 ? '' : 's' ?> awaiting weighing
             </span>
         </div>
     </div>

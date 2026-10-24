@@ -17,7 +17,7 @@ $tickets = (new ScaleTicket())->listTickets(200);
 
 <div class="panel">
     <div class="table-responsive">
-        <table class="table custom-table" id="ticketTable">
+        <table class="table custom-table" id="ticketTable" data-search="#ticketSearch">
             <thead>
                 <tr>
                     <th>Ticket</th><th>Farmer</th><th>Plate</th><th>Harvest</th><th>Grade</th>
@@ -81,11 +81,6 @@ $(document).on('click', '.js-status', function () {
     }, 'json');
 });
 
-// Simple client-side filter over the rendered rows.
-$('#ticketSearch').on('input', function () {
-    const q = $(this).val().toLowerCase();
-    $('#ticketTable tbody tr').each(function () {
-        $(this).toggle($(this).text().toLowerCase().indexOf(q) > -1);
-    });
-});
+// The header filter box is wired to the DataTables instance by
+// js/portal-datatables.js via the table's data-search attribute.
 </script>

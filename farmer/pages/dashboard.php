@@ -20,12 +20,12 @@ $farmName  = $profile['fullname'] ?? Auth::name();
 <section class="welcome-banner">
     <div class="row align-items-center">
         <div class="col-md-8">
-            <h2>Welcome back, <?= e($farmName) ?>! 👋</h2>
+            <h2>Welcome back, <?= e($farmName) ?></h2>
             <p>Here's what's happening with your palm harvest and hauling operations.</p>
             <div class="mt-3">
-                <span class="badge rounded-pill bg-light text-success px-3 py-2">
-                    <i class="bi bi-circle-fill me-1" style="font-size:7px"></i>
-                    <?= $summary['pending'] ?> request(s) awaiting review
+                <span class="chip">
+                    <span class="cdot"></span>
+                    <?= $summary['pending'] ?> request<?= (int) $summary['pending'] === 1 ? '' : 's' ?> awaiting review
                 </span>
             </div>
         </div>

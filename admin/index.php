@@ -20,7 +20,9 @@ $csrf    = csrf_token();
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/dt-1.13.11/datatables.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="../Styles/datatables.css">
 </head>
 
 <body>
@@ -71,6 +73,8 @@ $csrf    = csrf_token();
 <!-- Libraries -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/v/bs4/dt-1.13.11/datatables.min.js"></script>
+<script src="../js/portal-datatables.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 
 <script>
@@ -120,6 +124,7 @@ function load_pages(page) {
     // navigating away with a modal open) orphans that backdrop and leaves a
     // stuck dark overlay covering the whole admin. Close any open modal first.
     $('#page_result .modal.in').modal('hide');
+    window.dtDestroy && window.dtDestroy('#page_result');
     $.ajax({ url: 'pages/' + page, type: 'get',
         success: function (result) {
             $('#page_result').html(result);
@@ -127,6 +132,7 @@ function load_pages(page) {
             // any backdrop / body-scroll-lock the previous page left behind.
             $('.modal-backdrop').remove();
             $('body').removeClass('modal-open').css({ overflow: '', 'padding-right': '' });
+            window.dtApply && window.dtApply('#page_result');
         },
         error: function () { $('#page_result').html('<div class="alert alert-danger m-4">Failed to load page.</div>'); }
     });
@@ -146,11 +152,18 @@ $(document).ready(function () {
         $(this).removeClass('show');
     });
 
-    // Live search over the currently loaded tables.
+    // Live search over the currently loaded tables. When DataTables is bound we
+    // drive its own filter so paging/ordering stay consistent; otherwise fall
+    // back to a simple row toggle.
     $('#tableSearch').on('keyup', function () {
-        let value = $(this).val().toLowerCase();
+        let value = $(this).val();
+        if (window.jQuery && $.fn && $.fn.dataTable) {
+            $.fn.dataTable.tables({ visible: true, api: true }).search(value).draw();
+            return;
+        }
+        let v = value.toLowerCase();
         $('#page_result table tbody tr').each(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            $(this).toggle($(this).text().toLowerCase().indexOf(v) > -1);
         });
     });
 });

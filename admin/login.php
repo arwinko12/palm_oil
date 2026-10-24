@@ -515,4 +515,3 @@ $csrf = csrf_token();
 
 </body>
 </html>
-```
